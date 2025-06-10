@@ -3,7 +3,7 @@
 # Interface RethinkDB
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE.md)
-[![Version](https://img.shields.io/badge/version-beta-orange.svg)](https://github.com/antelopejs/antelope)
+[![Version](https://img.shields.io/badge/version-beta-orange.svg)](https://github.com/AntelopeJS/rethinkdb/tree/main/.antelope/output/rethinkdb/beta.d.ts)
 
 A direct interface to RethinkDB functionality. Interface RethinkDB provides access to RethinkDB for executing queries with a clean, promise-based API and full TypeScript support.
 
