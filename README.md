@@ -30,7 +30,7 @@ This is the development version (`beta`) of the Interface RethinkDB. It is curre
 
 | Version | Link                                                                                                     | Status                                        |
 | ------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| beta    | [rethinkdb@beta](https://github.com/AntelopeJS/rethinkdb/tree/main/.antelope/output/rethinkdb/beta.d.ts) | Waiting validation from community to go in v1 |
+| beta    | [rethinkdb@beta](https://github.com/AntelopeJS/rethinkdb/tree/main/output/rethinkdb/beta.d.ts) | Waiting validation from community to go in v1 |
 | 1       | _Not yet released_                                                                                       | Planned stable release                        |
 
 ## License
