@@ -23,18 +23,7 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
-    },
     "./package.json": "./package.json"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/*.d.ts"
-      ]
-    }
   },
   "scripts": {
     "build": "rimraf dist && tsc",
@@ -58,5 +47,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "antelopeJs": {}
 }
