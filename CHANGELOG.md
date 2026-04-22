@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.0.3
+
+[compare changes](https://github.com/AntelopeJS/interface-rethinkdb/compare/v0.0.2...v0.0.3)
+
+### 📖 Documentation
+
+- Rewrite documentation for production readiness ([3ab630e](https://github.com/AntelopeJS/interface-rethinkdb/commit/3ab630e))
+
+### 🏡 Chore
+
+- Update package.json ([34451fe](https://github.com/AntelopeJS/interface-rethinkdb/commit/34451fe))
+- Update dependencies ([53e127a](https://github.com/AntelopeJS/interface-rethinkdb/commit/53e127a))
+- Package maintenance ([#3](https://github.com/AntelopeJS/interface-rethinkdb/pull/3))
+
+### ❤️ Contributors
+
+- Antony Rizzitelli <upd4ting@gmail.com>
+
 ## v0.0.2
 
 
