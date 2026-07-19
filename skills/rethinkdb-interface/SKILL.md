@@ -60,10 +60,10 @@ ImplementInterface(rethinkdbInterface, {
 
 - Never call `.run()` on a query in consumer code — consumers have no connection. Always execute through `RunQuery`; the implementing module manages the connection.
 - `RunQuery` always returns a Promise, even for cursors/atomic values, because it crosses an AsyncProxy.
-- Calls made before an implementation attaches are queued by the AsyncProxy and resolve once a provider registers — they do not fail fast. A missing provider therefore looks like a hang, not an error.
+- Calls made before an implementation attaches are queued by the AsyncProxy and resolve once a provider registers — they do not fail fast. A missing provider therefore looks like a hang, not an error. Under the AntelopeJS test harness (test-stub mode) it instead rejects immediately with the "Interface function called without implementation in test environment" error.
 - `r.now()`, `r.uuid()`, etc. build ReQL terms evaluated server-side at execution time, not local values.
 - `@antelopejs/interface-core` is a peer dependency; the host project provides it.
 
 ## Deeper reference
 
-Full walkthrough (query builder, CRUD, query options, joins, aggregations) is in the repo's `docs/1.introduction.md` (not shipped in the npm package): https://github.com/AntelopeJS/interface-rethinkdb/blob/main/docs/1.introduction.md. Exact types are in `dist/index.d.ts`; the complete ReQL API is documented by RethinkDB and `rethinkdb-ts`. Do not duplicate those here.
+Full walkthrough (query builder, CRUD, query options, joins, aggregations) is in this package's `docs/1.introduction.md`. Exact types are in `dist/index.d.ts`; the complete ReQL API is documented by RethinkDB and `rethinkdb-ts`. Do not duplicate those here.
