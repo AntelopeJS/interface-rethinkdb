@@ -16,7 +16,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "docs",
+    "skills"
   ],
   "exports": {
     ".": {
@@ -51,5 +53,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "antelopeJs": {}
+  "antelopeJs": {
+    "skills": [
+      "./skills"
+    ]
+  }
 }
