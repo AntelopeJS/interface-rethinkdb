@@ -26,17 +26,17 @@ That single subpath is the whole public surface (`.` in the exports map; `./pack
 import { RunQuery, r } from "@antelopejs/interface-rethinkdb";
 
 // Read
-const user = await RunQuery(r.table("users").get("123"));
+const book = await RunQuery(r.table("books").get("bk-9f2c"));
 
 // Write
 const res = await RunQuery(
-  r.table("users").insert({ name: "Ada", createdAt: r.now() }),
+  r.table("books").insert({ title: "The Icebound Atlas", addedAt: r.now() }),
 );
 const id = res.generated_keys?.[0]; // only present when the server generated keys
 
 // Optional RunOptions as second argument
-const admins = await RunQuery(
-  r.table("users").filter({ role: "admin" }),
+const overdueLoans = await RunQuery(
+  r.table("loans").filter({ status: "overdue" }),
   { readMode: "outdated" },
 );
 ```
