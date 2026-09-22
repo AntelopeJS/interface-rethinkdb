@@ -1,5 +1,3 @@
-![RethinkDB](.github/social-card.png)
-
 # Interface RethinkDB
 
 <div align="center">
