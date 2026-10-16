@@ -47,15 +47,25 @@ export async function listActiveUsers() {
 
 ## Documentation
 
-- [Introduction](https://interfaces.antelopejs.com/docs/rethinkdb/introduction)
+- [Introduction and query reference](./docs/1.introduction.md)
 
 ## Compatibility
 
-| Package                             | Range            |
-| ----------------------------------- | ---------------- |
-| `@antelopejs/interface-core` (peer) | `>=0.0.3 <1.0.0` |
-| `rethinkdb-ts` (dependency)         | `^2.7.0`         |
-| `@antelopejs/core`                  | `1.x`            |
+Requires AntelopeJS core `1.x` and the following peer dependency:
+
+<!-- docs-compat: ./package.json#peerDependencies -->
+
+| Package                      | Range            |
+| ---------------------------- | ---------------- |
+| `@antelopejs/interface-core` | `>=0.0.3 <1.0.0` |
+
+Driver dependency:
+
+<!-- docs-compat: ./package.json#dependencies -->
+
+| Package        | Range    |
+| -------------- | -------- |
+| `rethinkdb-ts` | `^2.7.0` |
 
 ## Contributing
 
