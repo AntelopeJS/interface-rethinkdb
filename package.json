@@ -1,12 +1,17 @@
 {
   "name": "@antelopejs/interface-rethinkdb",
   "version": "0.0.5",
-  "description": "AntelopeJS interface for RethinkDB-specific database operations",
+  "description": "AntelopeJS interface for native RethinkDB queries on the shared connection",
   "keywords": [
     "antelopejs",
+    "database",
     "interface",
     "rethinkdb"
   ],
+  "homepage": "https://interfaces.antelopejs.com/docs/rethinkdb",
+  "bugs": {
+    "url": "https://github.com/AntelopeJS/interface-rethinkdb/issues"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
