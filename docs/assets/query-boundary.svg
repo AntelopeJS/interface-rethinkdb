@@ -1,20 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 330" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="660" viewBox="0 0 480 660" role="img" aria-labelledby="title desc">
   <title id="title">Building is not executing a RethinkDB query</title>
   <desc id="desc">r builds a query locally. RunQuery accepts that query and run options, then the configured provider executes it against RethinkDB and returns the driver's query result.</desc>
   <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8" fill="#627d98"/></marker></defs>
-  <rect width="800" height="330" rx="16" fill="#f4f7fb"/>
-  <g font-family="system-ui, sans-serif" fill="#17324d">
-    <text x="28" y="38" font-size="22" font-weight="700">A query description crosses the execution boundary</text>
-    <text x="28" y="80" font-size="14" font-weight="600">LOCAL CONSTRUCTION</text><text x="320" y="80" font-size="14" font-weight="600">PROVIDER EXECUTION</text>
-    <path d="M290 94V259" stroke="#b0c9e0" stroke-dasharray="5 5"/>
-    <rect x="28" y="112" width="226" height="122" rx="10" fill="#e2edf8" stroke="#b0c9e0"/>
-    <text x="46" y="147" font-size="20" font-weight="700">r.table("users")</text><text x="46" y="179" font-size="16">.filter({ active: true })</text><text x="46" y="211" font-size="14">No request yet</text>
-    <path d="M254 171H317" stroke="#627d98" stroke-width="2" marker-end="url(#arrow)"/>
-    <rect x="328" y="112" width="212" height="122" rx="10" fill="#17324d"/>
-    <text x="346" y="151" fill="#fff" font-size="20" font-weight="700">RunQuery(query)</text><text x="346" y="183" fill="#d5e5f3" font-size="15">Optional RunOptions</text><text x="346" y="211" fill="#d5e5f3" font-size="14">Managed connection</text>
-    <path d="M540 171H588" stroke="#627d98" stroke-width="2" marker-end="url(#arrow)"/>
-    <rect x="600" y="112" width="172" height="122" rx="10" fill="#e2f3ec" stroke="#91c7ae"/>
-    <text x="618" y="155" font-size="20" font-weight="700">Query result</text><text x="618" y="186" font-size="15">Driver result type</text><text x="618" y="211" font-size="14">Not always an array</text>
-    <text x="28" y="294" font-size="16">Choose consistency deliberately: outdated reads may return stale data.</text>
+  <rect width="480" height="660" rx="16" fill="#f4f7fb"/>
+  <g font-family="system-ui, sans-serif" fill="#17324d" font-size="18">
+    <text x="24" y="36" font-size="24" font-weight="700">Build first. Execute second.</text>
+    <text x="24" y="75" font-size="16" font-weight="600">LOCAL CONSTRUCTION</text>
+    <rect x="24" y="94" width="432" height="120" rx="10" fill="#e2edf8" stroke="#b0c9e0"/>
+    <text x="44" y="130" font-size="22" font-weight="700">r.table("users")</text><text x="44" y="163">.filter({ active: true })</text><text x="44" y="193">No request yet</text>
+    <path d="M24 245H456" stroke="#b0c9e0" stroke-dasharray="5 5"/>
+    <path d="M240 214V286" stroke="#627d98" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="24" y="279" font-size="16" font-weight="600">EXECUTION</text>
+    <rect x="24" y="300" width="432" height="120" rx="10" fill="#17324d"/>
+    <text x="44" y="335" fill="#fff" font-size="22" font-weight="700">RunQuery(query)</text><text x="44" y="369" fill="#d5e5f3">Optional RunOptions</text><text x="44" y="399" fill="#d5e5f3">Provider-managed connection</text>
+    <path d="M240 420V454" stroke="#627d98" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="24" y="464" width="432" height="100" rx="10" fill="#e2f3ec" stroke="#91c7ae"/>
+    <text x="44" y="497" font-size="22" font-weight="700">Query result</text><text x="44" y="530">Driver result type · not always an array</text>
+    <text x="24" y="605">Choose consistency deliberately:</text><text x="24" y="634">outdated reads may return stale data.</text>
   </g>
 </svg>
