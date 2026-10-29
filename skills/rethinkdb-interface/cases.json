@@ -44,6 +44,17 @@
         "acceptable": ["antelopejs", "ajs-consume-interface"],
         "mustMention": ["Promise"]
       }
+    },
+    {
+      "id": "rethinkdb-interface-database-neighbour",
+      "area": "framework",
+      "style": "clean",
+      "prompt": "How do I read records from the database and filter them with the AntelopeJS database interface, without writing backend-specific queries?",
+      "expect": {
+        "skills": ["database-interface"],
+        "acceptable": ["antelopejs", "ajs-consume-interface"],
+        "avoid": ["rethinkdb-interface"]
+      }
     }
   ]
 }
