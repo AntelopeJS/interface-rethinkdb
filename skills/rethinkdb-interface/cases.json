@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "rethinkdb-interface-run-query",
+      "area": "framework",
+      "style": "clean",
+      "prompt": "In my AntelopeJS module, how do I read one document from a RethinkDB table with the native query builder?",
+      "expect": {
+        "skills": ["rethinkdb-interface"],
+        "acceptable": ["antelopejs", "ajs-consume-interface"],
+        "mustMention": ["RunQuery", "r.table"]
+      }
+    },
+    {
+      "id": "rethinkdb-interface-run-options-casual",
+      "area": "framework",
+      "style": "casual",
+      "prompt": "how do i pass readMode or durability when i run a rethinkdb query from my module",
+      "expect": {
+        "skills": ["rethinkdb-interface"],
+        "acceptable": ["antelopejs", "ajs-consume-interface"],
+        "mustMention": ["RunQuery", "readMode"]
+      }
+    },
+    {
+      "id": "rethinkdb-interface-implement",
+      "area": "framework",
+      "style": "clean",
+      "prompt": "I own the RethinkDB connection in my AntelopeJS module. How do I implement the RethinkDB interface so other modules can run queries?",
+      "expect": {
+        "skills": ["rethinkdb-interface"],
+        "acceptable": ["antelopejs", "ajs-implement-interface"],
+        "mustMention": ["ImplementInterface", "RunQuery"]
+      }
+    },
+    {
+      "id": "rethinkdb-interface-result-type",
+      "area": "framework",
+      "style": "clean",
+      "prompt": "What type does RunQuery return in the AntelopeJS RethinkDB interface?",
+      "expect": {
+        "skills": ["rethinkdb-interface"],
+        "acceptable": ["antelopejs", "ajs-consume-interface"],
+        "mustMention": ["Promise"]
+      }
+    },
+    {
+      "id": "rethinkdb-interface-database-neighbour",
+      "area": "framework",
+      "style": "clean",
+      "prompt": "How do I read records from the database and filter them with the AntelopeJS database interface, without writing backend-specific queries?",
+      "expect": {
+        "skills": ["database-interface"],
+        "acceptable": ["antelopejs", "ajs-consume-interface"],
+        "avoid": ["rethinkdb-interface"]
+      }
+    }
+  ]
+}

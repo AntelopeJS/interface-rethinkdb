@@ -41,7 +41,7 @@ const overdueLoans = await RunQuery(
 );
 ```
 
-`RunQuery<T extends RQuery>(query, options?)` returns `ReturnType<T["run"]>`, so results are typed exactly as if you had called `query.run()` yourself.
+`RunQuery<T extends RQuery>(query, options?)` returns `Promise<Awaited<ReturnType<T["run"]>>>`, so the awaited result is typed exactly as if you had awaited `query.run()` yourself.
 
 ## Providing (implementer modules only)
 
