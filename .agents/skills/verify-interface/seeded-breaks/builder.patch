@@ -1,0 +1,15 @@
+diff --git a/src/index.ts b/src/index.ts
+index fdbdd03..f35a72c 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,7 +1,9 @@
+ import { InterfaceFunction } from "@antelopejs/interface-core";
+ import { type RQuery, type RunOptions, r } from "rethinkdb-ts";
+ 
+-export { r };
++const copy = { ...r };
++
++export { copy as r };
+ 
+ /**
+  * Executes a RethinkDB query with optional configuration options.
