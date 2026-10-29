@@ -18,6 +18,5 @@ export { r };
 export const RunQuery: <T extends RQuery>(
   query: T,
   options?: RunOptions,
-) => ReturnType<T["run"]> = InterfaceFunction<
-  (query: RQuery, options?: RunOptions) => any
->() as (...args: any[]) => any;
+) => Promise<Awaited<ReturnType<T["run"]>>> =
+  InterfaceFunction<(query: RQuery, options?: RunOptions) => any>();
