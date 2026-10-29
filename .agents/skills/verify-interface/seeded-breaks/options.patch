@@ -1,8 +1,8 @@
 diff --git a/src/index.ts b/src/index.ts
-index fdbdd03..2c3d310 100644
+index fdbdd03..a753825 100644
 --- a/src/index.ts
 +++ b/src/index.ts
-@@ -15,8 +15,11 @@ export { r };
+@@ -15,8 +15,14 @@ export { r };
   * const result = await RunQuery(r.table('users').get('123'), { readMode: 'outdated' });
   * ```
   */
@@ -13,5 +13,8 @@ index fdbdd03..2c3d310 100644
    options?: RunOptions,
  ) => Promise<Awaited<ReturnType<T["run"]>>> =
 -  InterfaceFunction<(query: RQuery, options?: RunOptions) => any>();
-+  ((query: RQuery, options?: RunOptions) =>
-+    run(query)) as never;
++  Object.assign(
++    (query: RQuery, options?: RunOptions) =>
++    run(query),
++    { proxy: Reflect.get(run, "proxy") },
++  ) as never;

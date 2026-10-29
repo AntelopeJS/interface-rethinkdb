@@ -195,7 +195,7 @@ const CRUD_BODY = `
     keyIsAString: typeof id === "string",
     inserted: pick(inserted, ["inserted", "errors"]),
     got: [got.name, got.email, got.createdAt instanceof Date],
-    missing,
+    missingIsNull: missing === null,
     active,
     updated: pick(updated, ["replaced", "unchanged", "skipped", "errors"]),
     unchanged: pick(unchanged, ["replaced", "unchanged", "skipped", "errors"]),
@@ -296,7 +296,7 @@ const config: VerifyConfig<typeof RethinkInterface> = {
     "crud-roundtrip": live({
       title: "RunQuery inserts, reads, updates and deletes documents and returns the driver's own results, write errors included, then the table is read back natively",
       body: CRUD_BODY,
-      printed: '{"keyIsAString":true,"inserted":{"inserted":1,"errors":0},"got":["Ada","ada@example.com",true],"missing":null,"active":["Ada","Cy"],"updated":{"replaced":1,"unchanged":0,"skipped":0,"errors":0},"unchanged":{"replaced":0,"unchanged":1,"skipped":0,"errors":0},"skipped":{"replaced":0,"unchanged":0,"skipped":1,"errors":0},"duplicate":[1,0,true],"deleted":{"deleted":1,"errors":0},"deletedAgain":{"deleted":0,"skipped":1,"errors":0},"absentTable":true}',
+      printed: '{"keyIsAString":true,"inserted":{"inserted":1,"errors":0},"got":["Ada","ada@example.com",true],"missingIsNull":true,"active":["Ada","Cy"],"updated":{"replaced":1,"unchanged":0,"skipped":0,"errors":0},"unchanged":{"replaced":0,"unchanged":1,"skipped":0,"errors":0},"skipped":{"replaced":0,"unchanged":0,"skipped":1,"errors":0},"duplicate":[1,0,true],"deleted":{"deleted":1,"errors":0},"deletedAgain":{"deleted":0,"skipped":1,"errors":0},"absentTable":true}',
       table: "users",
       stored: '[{"active":true,"createdAt":"date","email":"ada@example.com","id":"generated","name":"Ada"},{"active":false,"email":"bob@example.com","id":"u2","name":"Bob"}]',
     }),
