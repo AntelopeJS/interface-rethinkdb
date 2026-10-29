@@ -1,5 +1,39 @@
 # Changelog
 
+## v0.1.0
+
+[compare changes](https://github.com/AntelopeJS/interface-rethinkdb/compare/v0.0.6...v0.1.0)
+
+### 🚀 Enhancements
+
+- **rethinkdb:** ⚠️  Tighten the published contract ([#26](https://github.com/AntelopeJS/interface-rethinkdb/pull/26))
+
+### 💅 Refactors
+
+- Clean the repo with the guardrail pack ([#23](https://github.com/AntelopeJS/interface-rethinkdb/pull/23))
+
+### 📖 Documentation
+
+- Add task-based reading paths and contract diagrams ([#18](https://github.com/AntelopeJS/interface-rethinkdb/pull/18))
+- Clarify learning paths and illustrate real outcomes ([#20](https://github.com/AntelopeJS/interface-rethinkdb/pull/20))
+
+### 📦 Build
+
+- **deps:** Upgrade tooling-configs to 0.2.11 ([#25](https://github.com/AntelopeJS/interface-rethinkdb/pull/25))
+
+### 🏡 Chore
+
+- Adopt the guardrail pack from tooling-configs 0.2.0 ([#21](https://github.com/AntelopeJS/interface-rethinkdb/pull/21))
+- Configure Renovate with the shared preset ([#22](https://github.com/AntelopeJS/interface-rethinkdb/pull/22))
+
+#### ⚠️ Breaking Changes
+
+- **rethinkdb:** ⚠️  Tighten the published contract ([#26](https://github.com/AntelopeJS/interface-rethinkdb/pull/26))
+
+### ❤️ Contributors
+
+- Antony Rizzitelli ([@Upd4ting](http://github.com/Upd4ting))
+
 ## v0.0.6
 
 [compare changes](https://github.com/AntelopeJS/interface-rethinkdb/compare/v0.0.5...v0.0.6)
