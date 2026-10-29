@@ -1,0 +1,20 @@
+diff --git a/src/index.ts b/src/index.ts
+index fdbdd03..a753825 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -15,8 +15,14 @@ export { r };
+  * const result = await RunQuery(r.table('users').get('123'), { readMode: 'outdated' });
+  * ```
+  */
++const run = InterfaceFunction<(query: RQuery, options?: RunOptions) => any>();
++
+ export const RunQuery: <T extends RQuery>(
+   query: T,
+   options?: RunOptions,
+ ) => Promise<Awaited<ReturnType<T["run"]>>> =
+-  InterfaceFunction<(query: RQuery, options?: RunOptions) => any>();
++  Object.assign(
++    (query: RQuery, options?: RunOptions) =>
++    run(query),
++    { proxy: Reflect.get(run, "proxy") },
++  ) as never;
