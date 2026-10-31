@@ -51,7 +51,7 @@ export async function listActiveUsers() {
 
 ## Compatibility
 
-Requires AntelopeJS core `1.x` and the following peer dependency:
+The interface has one AntelopeJS peer dependency:
 
 <!-- antelopejs-docs-compat:start -->
 
@@ -61,7 +61,13 @@ Requires AntelopeJS core `1.x` and the following peer dependency:
 
 <!-- antelopejs-docs-compat:end -->
 
-Driver dependency:
+The RethinkDB driver is the runtime dependency:
+
+<!-- docs-compat: ./package.json#dependencies -->
+
+| Package        | Range    |
+| -------------- | -------- |
+| `rethinkdb-ts` | `^2.7.0` |
 
 ## Contributing
 
