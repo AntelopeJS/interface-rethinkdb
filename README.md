@@ -9,6 +9,8 @@
 
 The AntelopeJS interface for native RethinkDB queries. You build a ReQL query with `r` and run it on the connection that the implementing module shares with every caller. Use it for what the database-agnostic [`@antelopejs/interface-database`](https://github.com/AntelopeJS/interface-database) does not cover.
 
+Part of [AntelopeJS](https://github.com/AntelopeJS/antelopejs), the TypeScript framework where modules depend on contracts and the application chooses the provider. Built by the team behind [AntelopeJS DMS](https://github.com/AntelopeJS/dms).
+
 ## What it offers
 
 - `r` is the [rethinkdb-ts](https://github.com/rethinkdb/rethinkdb-ts) query builder, re-exported.
