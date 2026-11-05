@@ -268,20 +268,17 @@ const config: VerifyConfig<typeof RethinkInterface> = {
     contract: {
       globs: ["src/index.ts", "package.json"],
       funnels: [],
-      containments: [],
       why: "RunQuery, its answer type and the re-exported `r` are what every module that runs native queries imports",
     },
     outbound: {
       globs: ["src/index.ts"],
       funnels: [],
-      containments: [],
       why: "RunQuery hands every query and its run options to the database provider; what is sent, and what comes back, is decided at this file",
     },
     exposure: null,
     publish: {
       globs: ["package.json", ".release-it.json", "changelogen.config.json", ".github/workflows/release.yml"],
       funnels: [],
-      containments: [],
       why: "the package name and release workflow claim @antelopejs/interface-rethinkdb on npm",
     },
   },
