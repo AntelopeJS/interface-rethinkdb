@@ -8,7 +8,7 @@ function journeyDatabase(): string {
   return `journey_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-/** The setup every scenario shares: the packed interface, a native connection pool, and a provider that runs each query on that pool and records the run options. */
+/** The setup every scenario shares: the packed interface, the journey's own database with a native connection pool on it, and a provider that runs each query on that pool and records the run options. */
 const SCENARIO_PRELUDE = `
 const [dist, repo, host, port, db] = process.argv.slice(2);
 const { createRequire } = require("node:module");
