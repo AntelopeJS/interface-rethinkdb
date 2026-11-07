@@ -1,41 +1,16 @@
 import { equal } from "@antelopejs/tooling-configs/verify";
-import type { Journey, JourneyContext, VerifyConfig } from "@antelopejs/tooling-configs/verify";
+import type { Journey, VerifyConfig } from "@antelopejs/tooling-configs/verify";
 
 import type * as RethinkInterface from "../../../src/index.ts";
 
-const READY_POLLS = 60;
-const SETTLE_MS = 500;
-
-/** Starts a disposable RethinkDB in Docker on a free loopback port, hands its host and port to `use`, and removes the container whatever happens: the interface kind starts no services of its own. */
-async function withRethinkdb(context: JourneyContext, use: (host: string, port: string) => Promise<void>): Promise<void> {
-  const name = `${process.env.VERIFY_CONTAINER_PREFIX ?? "h6"}-interface-rethinkdb-db-${Date.now().toString(36)}`;
-  const started = await context.command("start rethinkdb", "docker", ["run", "-d", "--name", name, "-p", "127.0.0.1::28015", "rethinkdb:2.4"], {
-    timeoutMs: 120_000,
-  });
-  try {
-    context.expect(started.folder, [{ name: "rethinkdb container started", pass: started.exitCode === 0, detail: started.stderr.slice(-300) }], {
-      critical: true,
-    });
-    let ready = false;
-    for (let poll = 0; poll < READY_POLLS && !ready; poll += 1) {
-      const logs = await context.command("rethinkdb logs", "docker", ["logs", name]);
-      ready = `${logs.stdout}${logs.stderr}`.includes("Server ready");
-      if (!ready) await new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
-    }
-    const mapped = await context.command("rethinkdb port", "docker", ["port", name, "28015/tcp"]);
-    const port = /:(\d+)$/m.exec(mapped.stdout)?.[1];
-    context.expect(mapped.folder, [{ name: "rethinkdb reported ready on a published port", pass: ready && port !== undefined, detail: mapped.stdout }], {
-      critical: true,
-    });
-    await use("127.0.0.1", String(port));
-  } finally {
-    await context.command("remove rethinkdb", "docker", ["rm", "-f", name]);
-  }
+/** Each live journey gets its own database on the run's shared RethinkDB, so journeys never see each other's tables. */
+function journeyDatabase(): string {
+  return `journey_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-/** The setup every scenario shares: the packed interface, a native connection pool, and a provider that runs each query on that pool and records the run options. */
+/** The setup every scenario shares: the packed interface, the journey's own database with a native connection pool on it, and a provider that runs each query on that pool and records the run options. */
 const SCENARIO_PRELUDE = `
-const [dist, repo, host, port] = process.argv.slice(2);
+const [dist, repo, host, port, db] = process.argv.slice(2);
 const { createRequire } = require("node:module");
 const driver = createRequire(repo + "/")("rethinkdb-ts");
 const rdb = require(dist);
@@ -45,7 +20,8 @@ const rejection = async (promise) => { try { await promise; return null; } catch
 const pick = (value, keys) => Object.fromEntries(keys.map((key) => [key, value[key] ?? null]));
 let pool;
 async function connect() {
-  pool = await driver.r.connectPool({ host, port: Number(port), db: "test" });
+  pool = await driver.r.connectPool({ host, port: Number(port), db });
+  await driver.r.dbCreate(db).run();
   rdb.RunQuery.proxy.onCall(async (query, options) => { seen.push(options ?? null); return options === undefined ? query.run() : query.run(options); }, true);
 }
 `;
@@ -56,10 +32,10 @@ connect().then(main).then(async (out) => { console.log(JSON.stringify(out, (key,
 
 /** Reads the table back with the native driver on a fresh connection, without the interface: the second view. */
 const READBACK = `
-const [repo, host, port, table] = process.argv.slice(2);
+const [repo, host, port, db, table] = process.argv.slice(2);
 const { r } = require("node:module").createRequire(repo + "/")("rethinkdb-ts");
 (async () => {
-  const pool = await r.connectPool({ host, port: Number(port), db: "test" });
+  const pool = await r.connectPool({ host, port: Number(port), db });
   const rows = await r.table(table).orderBy("id").run();
   console.log(JSON.stringify(rows.map((row) => ({ ...row, id: /^[0-9a-f]{8}-/.test(row.id) ? "generated" : row.id, createdAt: row.createdAt instanceof Date ? "date" : row.createdAt }))));
   await pool.drain();
@@ -82,26 +58,26 @@ interface Scenario {
   stored?: string;
 }
 
-/** Runs a scenario against the packed interface with a provider that executes on a live RethinkDB, then reads the table back through the native driver. */
+/** Runs a scenario against the packed interface with a provider that executes on the run's RethinkDB, then reads the table back through the native driver. */
 function live({ title, body, printed, table, stored }: Scenario): Journey {
   return {
     title,
-    entryPoint: "the packed interface driven from a Node process with a provider that runs queries on a RethinkDB container",
+    entryPoint: "the packed interface driven from a Node process with a provider that runs queries on the run's RethinkDB",
     async run(context) {
-      await withRethinkdb(context, async (host, port) => {
-        const file = `${context.work}/scenario.js`;
-        context.edit("write the scenario", file, `${SCENARIO_PRELUDE}\nasync function main() {\n${body}\n}\n${SCENARIO_TAIL}`);
-        const ran = await context.command("run the scenario", "node", [file, `${context.repo}/dist/index.js`, context.repo, host, port], { timeoutMs: 90_000 });
-        context.expect(ran.folder, [
-          { name: "the scenario ended cleanly", pass: ran.exitCode === 0, detail: ran.stderr.slice(-300) },
-          equal("the scenario printed what docs/1.introduction.md promises", ran.stdout.trim().split("\n").at(-1) ?? "", printed),
-        ]);
-        if (table === undefined) return;
-        const readback = `${context.work}/readback.js`;
-        context.edit("write the read-back", readback, READBACK);
-        const read = await context.command("read the table back natively", "node", [readback, context.repo, host, port, table], { timeoutMs: 60_000 });
-        context.expect(read.folder, [equal("RethinkDB holds the records the scenario left", read.stdout.trim(), stored ?? "")]);
-      });
+      const { host, port } = context.service("rethinkdb");
+      const db = journeyDatabase();
+      const file = `${context.work}/scenario.js`;
+      context.edit("write the scenario", file, `${SCENARIO_PRELUDE}\nasync function main() {\n${body}\n}\n${SCENARIO_TAIL}`);
+      const ran = await context.command("run the scenario", "node", [file, `${context.repo}/dist/index.js`, context.repo, host, String(port), db], { timeoutMs: 90_000 });
+      context.expect(ran.folder, [
+        { name: "the scenario ended cleanly", pass: ran.exitCode === 0, detail: ran.stderr.slice(-300) },
+        equal("the scenario printed what docs/1.introduction.md promises", ran.stdout.trim().split("\n").at(-1) ?? "", printed),
+      ]);
+      if (table === undefined) return;
+      const readback = `${context.work}/readback.js`;
+      context.edit("write the read-back", readback, READBACK);
+      const read = await context.command("read the table back natively", "node", [readback, context.repo, host, String(port), db, table], { timeoutMs: 60_000 });
+      context.expect(read.folder, [equal("RethinkDB holds the records the scenario left", read.stdout.trim(), stored ?? "")]);
     },
   };
 }
@@ -280,6 +256,17 @@ const config: VerifyConfig<typeof RethinkInterface> = {
       globs: ["package.json", ".release-it.json", "changelogen.config.json", ".github/workflows/release.yml"],
       funnels: [],
       why: "the package name and release workflow claim @antelopejs/interface-rethinkdb on npm",
+    },
+  },
+  services: {
+    rethinkdb: {
+      image: "rethinkdb:2.4",
+      port: 28015,
+      ready: [
+        "bash",
+        "-c",
+        'exec 3<>/dev/tcp/127.0.0.1/28015 && printf "\\xc3\\xbd\\xc2\\x34" >&3 && IFS= read -r -t 5 -d "" -u 3 reply; case "$reply" in *\\"success\\":true*) exit 0;; *) exit 1;; esac',
+      ],
     },
   },
   interface: {
