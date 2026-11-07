@@ -27,4 +27,4 @@ pnpm exec antelopejs-verify journey "$RUN" options
 
 ## Gotchas
 
-- The journeys that need a database start their own `rethinkdb:2.4` container on a free port and remove it afterwards; the interface kind of the harness starts no services. The provider is a stand-in that runs each query on a native connection pool, so what the journeys prove is what this interface passes and returns, not what the real `@antelopejs/rethinkdb` module does.
+- The journeys that need a database share the run's `rethinkdb` service (`rethinkdb:2.4`), which `new` starts on a free port and `clean` removes; each journey creates its own database on it, so journeys never see each other's tables. The provider is a stand-in that runs each query on a native connection pool, so what the journeys prove is what this interface passes and returns, not what the real `@antelopejs/rethinkdb` module does.
