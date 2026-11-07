@@ -284,7 +284,7 @@ const config: VerifyConfig<typeof RethinkInterface> = {
   },
   interface: {
     calls: {
-      ".:r": { call: (api) => "table" in api.r && "now" in api.r, expect: true },
+      ".:r": { call: async (api) => "table" in api.r && "now" in api.r, expect: true },
     },
   },
   journeys: {
