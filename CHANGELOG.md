@@ -1,5 +1,50 @@
 # Changelog
 
+## v0.1.1
+
+[compare changes](https://github.com/AntelopeJS/interface-rethinkdb/compare/v0.1.0...v0.1.1)
+
+### 🚀 Enhancements
+
+- **skills:** Add the verify-interface verification skill ([#27](https://github.com/AntelopeJS/interface-rethinkdb/pull/27))
+- **rethinkdb:** Type RunQuery's result as QueryResult ([#44](https://github.com/AntelopeJS/interface-rethinkdb/pull/44))
+
+### 🔥 Performance
+
+- **verify:** Share one RethinkDB service across the live journeys ([#41](https://github.com/AntelopeJS/interface-rethinkdb/pull/41))
+- **build:** Skip the lib check in build, typecheck keeps it ([#42](https://github.com/AntelopeJS/interface-rethinkdb/pull/42))
+
+### 🩹 Fixes
+
+- **verify:** Return a promise from the r call check ([#40](https://github.com/AntelopeJS/interface-rethinkdb/pull/40))
+
+### 📖 Documentation
+
+- **readme:** Use one Discord invite ([#30](https://github.com/AntelopeJS/interface-rethinkdb/pull/30))
+- **github:** Send questions and ideas to Discord ([#31](https://github.com/AntelopeJS/interface-rethinkdb/pull/31))
+- **readme:** Link the package to AntelopeJS and AntelopeJS DMS ([ebe8fb4](https://github.com/AntelopeJS/interface-rethinkdb/commit/ebe8fb4))
+
+### 📦 Build
+
+- **deps:** Bump @antelopejs/tooling-configs to 0.2.17 ([#28](https://github.com/AntelopeJS/interface-rethinkdb/pull/28))
+- **deps:** Bump @antelopejs packages to the 2026-11-06 releases ([#39](https://github.com/AntelopeJS/interface-rethinkdb/pull/39))
+- **deps:** Bump @antelopejs/tooling-configs to 0.4.0 ([#43](https://github.com/AntelopeJS/interface-rethinkdb/pull/43))
+
+### 🏡 Chore
+
+- Land the cleanup campaign on main ([#34](https://github.com/AntelopeJS/interface-rethinkdb/pull/34))
+- **verify:** Remove seeded runs from the verification skill ([#36](https://github.com/AntelopeJS/interface-rethinkdb/pull/36))
+- **ci:** Remove the weekly mutation caller ([#37](https://github.com/AntelopeJS/interface-rethinkdb/pull/37))
+
+### 🤖 CI
+
+- Call ci-node.yml@v1 ([#38](https://github.com/AntelopeJS/interface-rethinkdb/pull/38))
+- **release:** Accept an exact release version ([#45](https://github.com/AntelopeJS/interface-rethinkdb/pull/45))
+
+### ❤️ Contributors
+
+- Antony Rizzitelli ([@Upd4ting](http://github.com/Upd4ting))
+
 ## v0.1.0
 
 [compare changes](https://github.com/AntelopeJS/interface-rethinkdb/compare/v0.0.6...v0.1.0)

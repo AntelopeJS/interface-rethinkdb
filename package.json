@@ -1,6 +1,6 @@
 {
   "name": "@antelopejs/interface-rethinkdb",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AntelopeJS interface for native RethinkDB queries on the shared connection",
   "keywords": [
     "antelopejs",
