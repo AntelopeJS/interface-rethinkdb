@@ -216,7 +216,7 @@ type _Exports = Assert<Identical<keyof typeof Api, "RunQuery" | "r">>;
 `;
 
 const RUN_TYPES = `
-type _Signature = Assert<Identical<typeof Api.RunQuery, <T extends RQuery>(query: T, options?: RunOptions) => Promise<Awaited<ReturnType<T["run"]>>>>>;
+type _Signature = Assert<Identical<typeof Api.RunQuery, (query: RQuery, options?: RunOptions) => Promise<Api.QueryResult>>>;
 const get = Api.r.table("users").get("1");
 const insert = Api.r.table("users").insert({ name: "a" });
 const filter = Api.r.table("users").filter({ active: true });
@@ -226,12 +226,11 @@ async function answers() {
   const written = await Api.RunQuery(insert);
   const many = await Api.RunQuery(filter);
   const counts = await Api.RunQuery(grouped);
-  type _One = Assert<Identical<typeof one, Awaited<ReturnType<typeof get.run>>>>;
-  type _Written = Assert<Identical<typeof written, Awaited<ReturnType<typeof insert.run>>>>;
-  type _Many = Assert<Identical<typeof many, Awaited<ReturnType<typeof filter.run>>>>;
-  type _Counts = Assert<Identical<typeof counts, Awaited<ReturnType<typeof grouped.run>>>>;
-  type _WrittenKnown = Assert<NotAny<typeof written>>;
-  type _ManyKnown = Assert<NotAny<typeof many>>;
+  type _One = Assert<Identical<typeof one, Api.QueryResult>>;
+  type _Written = Assert<Identical<typeof written, Api.QueryResult>>;
+  type _Many = Assert<Identical<typeof many, Api.QueryResult>>;
+  type _Counts = Assert<Identical<typeof counts, Api.QueryResult>>;
+  type _Known = Assert<NotAny<Api.QueryResult>>;
   type _Options = Assert<Identical<Parameters<typeof Api.RunQuery>[1], RunOptions | undefined>>;
 }
 void answers;
@@ -284,7 +283,7 @@ const config: VerifyConfig<typeof RethinkInterface> = {
       table: "users",
       stored: '[{"active":true,"createdAt":"date","email":"ada@example.com","id":"generated","name":"Ada"},{"active":false,"email":"bob@example.com","id":"u2","name":"Bob"}]',
     }),
-    "run-types": declared("RunQuery has the documented generic signature and answers each query with the type of its own `run()`", RUN_TYPES),
+    "run-types": declared("RunQuery has the documented signature and answers every query with `QueryResult`, never `any`", RUN_TYPES),
     "run-options": live({ title: "RunQuery hands the run options to the provider untouched and the database honours them", body: OPTIONS_BODY, printed: '{"plain":2,"outdated":[1],"soft":{"inserted":1,"errors":0},"refused":true,"seen":[null,{"readMode":"outdated"},{"durability":"soft"},{"readMode":"invalid"}]}', table: "items", stored: '[{"id":1,"tag":"a"},{"id":2,"tag":"b"},{"id":3,"tag":"c"}]' }),
     "joins-and-aggregates": live({ title: "RunQuery returns the joined rows and the grouped counts the driver builds", body: ADVANCED_BODY, printed: '{"joined":[["u1","p1"],["u1","p2"],["u2","p3"]],"grouped":[["admin",1],["member",2]],"count":3}' }),
   },

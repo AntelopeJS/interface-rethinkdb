@@ -7,10 +7,11 @@ tags: [antelopejs, rethinkdb, reql, database, queries]
 
 # RethinkDB Interface
 
-Thin AntelopeJS interface over RethinkDB. It exports exactly two things:
+Thin AntelopeJS interface over RethinkDB. It exports two values and one type:
 
 - `r` — the ReQL query builder, re-exported unchanged from `rethinkdb-ts`. Building queries with `r` is pure and consumer-side; nothing touches the network.
 - `RunQuery` — the only proxy crossing. It is an `InterfaceFunction` (AsyncProxy): the call is routed to whichever module implements the interface and owns the connection.
+- `QueryResult` — the type `RunQuery` resolves to.
 
 ## Imports
 
@@ -32,7 +33,9 @@ const book = await RunQuery(r.table("books").get("bk-9f2c"));
 const res = await RunQuery(
   r.table("books").insert({ title: "The Icebound Atlas", addedAt: r.now() }),
 );
-const id = res.generated_keys?.[0]; // only present when the server generated keys
+if (isWriteResult(res)) {
+  const id = res.generated_keys?.[0]; // only present when the server generated keys
+}
 
 // Optional RunOptions as second argument
 const overdueLoans = await RunQuery(
@@ -41,7 +44,7 @@ const overdueLoans = await RunQuery(
 );
 ```
 
-`RunQuery<T extends RQuery>(query, options?)` returns `Promise<Awaited<ReturnType<T["run"]>>>`, so the awaited result is typed exactly as if you had awaited `query.run()` yourself.
+`RunQuery(query, options?)` returns `Promise<QueryResult>`. `QueryResult` (exported as a type) is any value a query can resolve to: a JSON value, a `Date`, bytes, or `undefined`. The implementing module runs the query and the interface cannot check its answer against the query, so the result is not typed as `query.run()` would be. Narrow it before reading a field, for example with a guard that checks `typeof result.errors === "number"` for a write result (`isWriteResult` above, typed `result is QueryResult & WriteResult` with `WriteResult` from `rethinkdb-ts`).
 
 ## Providing (implementer modules only)
 

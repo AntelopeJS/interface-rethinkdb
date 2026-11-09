@@ -14,7 +14,7 @@ Part of [AntelopeJS](https://github.com/AntelopeJS/antelopejs), the TypeScript f
 ## What it offers
 
 - `r` is the [rethinkdb-ts](https://github.com/rethinkdb/rethinkdb-ts) query builder, re-exported.
-- `RunQuery(query, options?)` runs a query on the connection that the implementing module manages, and returns the query's own result type.
+- `RunQuery(query, options?)` runs a query on the connection that the implementing module manages, and resolves to a `QueryResult`, which you narrow before you read a field.
 - Run options such as `readMode` and `durability` pass through to the driver.
 
 ## Implementations
