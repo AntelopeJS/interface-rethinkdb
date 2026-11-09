@@ -36,7 +36,7 @@
     "provenance": true
   },
   "scripts": {
-    "build": "rimraf dist && tsc --skipLibCheck",
+    "build": "rimraf dist && tsc -p tsconfig.build.json --skipLibCheck",
     "format": "oxfmt .",
     "lint:fix": "oxlint --fix",
     "lint": "oxlint",
