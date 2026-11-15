@@ -1,0 +1,9 @@
+{
+  "knownFailures": [
+    {
+      "dependency": "rethinkdb-ts",
+      "file": "lib/response/cursor.d.ts",
+      "code": "TS2416"
+    }
+  ]
+}

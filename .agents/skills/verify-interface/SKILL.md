@@ -15,7 +15,7 @@ The user of an interface is a module author: one module implements it, others im
 node_modules/.bin/antelopejs-verify new --base origin/main --title "<PR title>"
 ```
 
-`new` prints the run folder; pass it as `<run>` below. `new` runs the setup (`pnpm run build` by default), then packs the interface with `pnpm pack` and extracts it, so journeys load what npm would publish, `files` and `exports` included. Every `services` entry of `verify.config.ts` then starts in its own Docker container on a free loopback port, as for a module. Every journey gets its own `HOME` and scratch folder, `CI=1`, `AJS_NO_UPDATE_CHECK=1`, `NO_COLOR=1` and a free port from the kernel, so two runs never share an instance. Run it from the repository root after installing dependencies.
+`new` prints the run folder; pass it as `<run>` below. `new` runs the setup (`pnpm run build` by default), then runs the interface's `prepack` through `pnpm run`, packs it with `pnpm pack` with lifecycle scripts off, and extracts it, so journeys load what npm would publish, `files` and `exports` included. Every `services` entry of `verify.config.ts` then starts in its own Docker container on a free loopback port, as for a module. Every journey gets its own `HOME` and scratch folder, `CI=1`, `AJS_NO_UPDATE_CHECK=1`, `NO_COLOR=1` and a free port from the kernel, so two runs never share an instance. Run it from the repository root after installing dependencies.
 
 ## Doctor
 
