@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.1.2
+
+[compare changes](https://github.com/AntelopeJS/interface-rethinkdb/compare/v0.1.1...v0.1.2)
+
+### 📖 Documentation
+
+- **readme:** Adopt the AntelopeJS framework README style ([8d028f5](https://github.com/AntelopeJS/interface-rethinkdb/commit/8d028f5eccbfc2d45d2aa358a2af455817ad81c0))
+
+### 📦 Build
+
+- **deps:** Bump @antelopejs/tooling-configs to 0.5.0 ([#46](https://github.com/AntelopeJS/interface-rethinkdb/pull/46))
+- **deps:** Bump @antelopejs/tooling-configs to 0.5.1 ([#47](https://github.com/AntelopeJS/interface-rethinkdb/pull/47))
+- **deps:** Move to tooling-configs 0.7.3 and cap @antelopejs ranges below the next minor ([#50](https://github.com/AntelopeJS/interface-rethinkdb/pull/50))
+- Move to @antelopejs/tooling-configs 0.8 and the three-tier CI ([#51](https://github.com/AntelopeJS/interface-rethinkdb/pull/51))
+
+### 🤖 CI
+
+- Run the checks on Windows beside Linux ([#49](https://github.com/AntelopeJS/interface-rethinkdb/pull/49))
+
+#### ⚠️ Breaking Changes
+
+- **deps:** Move to tooling-configs 0.7.3 and cap @antelopejs ranges below the next minor ([#50](https://github.com/AntelopeJS/interface-rethinkdb/pull/50))
+
+### ❤️ Contributors
+
+- Antony Rizzitelli
+
 ## v0.1.1
 
 [compare changes](https://github.com/AntelopeJS/interface-rethinkdb/compare/v0.1.0...v0.1.1)
